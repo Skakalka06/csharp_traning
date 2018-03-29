@@ -59,6 +59,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="managerhelpers\HelperBase.cs" />
     <Compile Include="managerhelpers\ContactHelper.cs" />
     <Compile Include="managerhelpers\GroupHelper.cs" />
     <Compile Include="managerhelpers\LoginHelper.cs" />
