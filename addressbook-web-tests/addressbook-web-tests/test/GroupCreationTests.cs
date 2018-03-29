@@ -13,16 +13,16 @@ namespace WebAddressbookTests
         [Test]
         public void GroupCreationTest()
         {
-            OpenHomePage();
-            Login(new AccountData ("admin", "secret"));
-            GoToGroupsPage();
-            InitNewGroupCreation();
+            navigator.OpenHomePage();
+            loginHelper.Login(new AccountData ("admin", "secret"));
+            navigator.GoToGroupsPage();
+            groupHelper.InitNewGroupCreation();
             GroupData group = new GroupData("111");
             group.Header = "222";
             group.Footer = "333";
-            FillGroupForm(group);
-            SubmitGroupCreation();
-            ReturnToGroupsPage();
+            groupHelper.FillGroupForm(group);
+            groupHelper.SubmitGroupCreation();
+            groupHelper.ReturnToGroupsPage();
             //driver.FindElement(By.LinkText("Logout")).Click();
         }
     }
