@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
@@ -27,17 +26,26 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public ContactHelper Modify(int index, ContactData newData)
+        {
+            SelectEditContact(index);
+            FillContactForm(newData);
+            SubmitContactModification();
+            ReturnToHomePage();
+            return this;
+        }
+
 
 
         public ContactHelper Create(ContactData contact)
         {
             manager.Navigator.OpenAddNewPage();
-            AddNewContact(contact);
+            FillContactForm(contact);
             SubmitContactCreation();
             return this;
         }
 
-        public ContactHelper AddNewContact(ContactData contact)
+        public ContactHelper FillContactForm(ContactData contact)
         {
             driver.FindElement(By.Name("firstname")).Clear();
             driver.FindElement(By.Name("firstname")).SendKeys(contact.Firstame);
@@ -73,5 +81,22 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public ContactHelper SubmitContactModification()
+        {
+            driver.FindElement(By.Name("update")).Click();
+            return this;
+        }
+
+        public ContactHelper SelectEditContact(int index)
+        {
+            driver.FindElement(By.XPath("(//img[@alt='Edit'])[" + index + "]")).Click();
+            return this;
+        }
+
+        public ContactHelper ReturnToHomePage()
+        {
+            driver.FindElement(By.LinkText("home page")).Click();
+            return this;
+        }
     }
 }
