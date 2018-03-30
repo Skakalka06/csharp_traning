@@ -29,10 +29,10 @@ namespace WebAddressbookTests
             baseURL = "http://localhost";
 
 
-            loginHelper = new LoginHelper(driver);
-            navigator = new NavigatorHelper(driver, baseURL);
-            groupHelper = new GroupHelper(driver);
-            contactHelper = new ContactHelper(driver);
+            loginHelper = new LoginHelper(this);
+            navigator = new NavigatorHelper(this, baseURL);
+            groupHelper = new GroupHelper(this);
+            contactHelper = new ContactHelper(this);
         }
 
         public void Stop ()
@@ -46,6 +46,14 @@ namespace WebAddressbookTests
                 // Ignore errors if unable to close the browser
             }
 
+        }
+
+        public IWebDriver Driver
+        {
+            get
+            {
+                return driver;
+            }
         }
 
         public LoginHelper Auth
@@ -79,5 +87,7 @@ namespace WebAddressbookTests
                 return contactHelper;
             }
         }
+
+
     }
 }
