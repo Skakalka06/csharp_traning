@@ -20,20 +20,42 @@ namespace WebAddressbookTests
         public ContactHelper Remove(int v)
         {
             manager.Navigator.OpenHomePage();
-            SelectContact(v);
-            RemoveContact();
-            SubmitDeleted();
+            if (IsElementPresent(By.XPath("(//input[@name='selected[]'])")))
+            {
+                SelectContact(v);
+                RemoveContact();
+                SubmitDeleted();
+            }
 
+            else
+
+            {
+                ContactData contact = new ContactData();
+                contact.Firstame = "Ivan";
+                contact.Lastname = "Pupkin";
+                Create(contact);
+            }
             return this;
         }
 
         public ContactHelper Modify(int index, ContactData newData)
         {
             manager.Navigator.OpenHomePage();
-            SelectEditContact(index);
-            FillContactForm(newData);
-            SubmitContactModification();
-            ReturnToHomePage();
+            if (IsElementPresent(By.XPath("(//img[@alt='Edit'])")))
+            {
+                SelectEditContact(index);
+                FillContactForm(newData);
+                SubmitContactModification();
+                ReturnToHomePage();
+            }
+            else
+            {
+                ContactData contact = new ContactData();
+                contact.Firstame = "Ivan";
+                contact.Lastname = "Pupkin";
+                Create(contact);
+            }
+
             return this;
         }
 
