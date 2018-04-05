@@ -34,6 +34,11 @@ namespace WebAddressbookTests
                 contact.Firstame = "Ivan";
                 contact.Lastname = "Pupkin";
                 Create(contact);
+
+                manager.Navigator.OpenHomePage();
+                SelectContact(v);
+                RemoveContact();
+                SubmitDeleted();
             }
             return this;
         }
@@ -54,6 +59,12 @@ namespace WebAddressbookTests
                 contact.Firstame = "Ivan";
                 contact.Lastname = "Pupkin";
                 Create(contact);
+
+                manager.Navigator.OpenHomePage();
+                SelectEditContact(index);
+                FillContactForm(newData);
+                SubmitContactModification();
+                ReturnToHomePage();
             }
 
             return this;

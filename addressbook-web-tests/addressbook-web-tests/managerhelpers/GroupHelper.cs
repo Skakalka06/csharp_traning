@@ -34,6 +34,10 @@ namespace WebAddressbookTests
                 group.Footer = "333";
 
                 Create(group);
+
+                SelectGroup(v);
+                RemoveGroup();
+                ReturnToGroupsPage();
             }
 
 
@@ -60,6 +64,13 @@ namespace WebAddressbookTests
                 group.Footer = "333";
 
                 Create(group);
+
+                SelectGroup(v);
+                InitGroupModification();
+                FillGroupForm(newData);
+                SubmitGroupModification();
+                ReturnToGroupsPage();
+
             }
 
 
