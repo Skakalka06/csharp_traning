@@ -19,6 +19,7 @@ namespace WebAddressbookTests
 
         public ContactHelper Remove(int v)
         {
+            manager.Navigator.OpenHomePage();
             SelectContact(v);
             RemoveContact();
             SubmitDeleted();
@@ -28,6 +29,7 @@ namespace WebAddressbookTests
 
         public ContactHelper Modify(int index, ContactData newData)
         {
+            manager.Navigator.OpenHomePage();
             SelectEditContact(index);
             FillContactForm(newData);
             SubmitContactModification();
@@ -47,10 +49,8 @@ namespace WebAddressbookTests
 
         public ContactHelper FillContactForm(ContactData contact)
         {
-            driver.FindElement(By.Name("firstname")).Clear();
-            driver.FindElement(By.Name("firstname")).SendKeys(contact.Firstame);
-            driver.FindElement(By.Name("lastname")).Clear();
-            driver.FindElement(By.Name("lastname")).SendKeys(contact.Lastname);
+            Type(By.Name("firstname"), contact.Firstame);
+            Type(By.Name("lastname"), contact.Lastname);
             return this;
         }
 

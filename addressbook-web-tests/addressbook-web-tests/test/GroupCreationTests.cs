@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class GroupCreationTests :TestBase
+    public class GroupCreationTests : AuthTestBase
     {
         [Test]
         public void GroupCreationTest()
@@ -18,7 +18,7 @@ namespace WebAddressbookTests
             group.Footer = "333";
 
             app.Groups.Create(group);
-            //driver.FindElement(By.LinkText("Logout")).Click();
+            
         }
 
         [Test]
