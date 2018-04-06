@@ -21,7 +21,7 @@ namespace WebAddressbookTests
         public GroupHelper Remove(int v)
         {
             manager.Navigator.GoToGroupsPage();
-            if (!IsElementPresent(By.XPath("(//input[@name='selected[]'])")))
+            if (!IsGroupCreated())
             {
                 GroupData group = new GroupData("111")
                 {
@@ -42,7 +42,7 @@ namespace WebAddressbookTests
         public GroupHelper Modify(int v, GroupData newData)
         {
             manager.Navigator.GoToGroupsPage();
-            if (!IsElementPresent(By.XPath("(//input[@name='selected[]'])")))
+            if (!IsGroupCreated())
             {
                 GroupData group = new GroupData("111");
                 group.Header = "222";
@@ -69,6 +69,11 @@ namespace WebAddressbookTests
             SubmitGroupCreation();
             ReturnToGroupsPage();
             return this;
+        }
+
+        public bool IsGroupCreated()
+        {
+            return IsElementPresent(By.XPath("(//input[@name='selected[]'])"));
         }
 
         public GroupHelper InitNewGroupCreation()

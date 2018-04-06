@@ -20,7 +20,7 @@ namespace WebAddressbookTests
         public ContactHelper Remove(int v)
         {
             manager.Navigator.OpenHomePage();
-            if (!IsElementPresent(By.XPath("(//input[@name='selected[]'])")))
+            if (!IsContactCreated())
             {
                 ContactData contact = new ContactData
                 {
@@ -41,7 +41,7 @@ namespace WebAddressbookTests
         public ContactHelper Modify(int index, ContactData newData)
         {
             manager.Navigator.OpenHomePage();
-            if (!IsElementPresent(By.XPath("(//img[@alt='Edit'])")))
+            if (!IsContactCreated())
             {
                 ContactData contact = new ContactData
                 {
@@ -67,6 +67,11 @@ namespace WebAddressbookTests
             FillContactForm(contact);
             SubmitContactCreation();
             return this;
+        }
+
+        public bool IsContactCreated()
+        {
+            return IsElementPresent(By.XPath("(//img[@alt='Edit'])"));
         }
 
         public ContactHelper FillContactForm(ContactData contact)
