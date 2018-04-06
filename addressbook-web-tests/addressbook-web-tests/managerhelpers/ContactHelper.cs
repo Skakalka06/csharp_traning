@@ -20,16 +20,6 @@ namespace WebAddressbookTests
         public ContactHelper Remove(int v)
         {
             manager.Navigator.OpenHomePage();
-            if (!IsContactCreated())
-            {
-                ContactData contact = new ContactData
-                {
-                    Firstame = "Ivan",
-                    Lastname = "Pupkin"
-                };
-                Create(contact);
-                manager.Navigator.OpenHomePage();
-            }
 
                 SelectContact(v);
                 RemoveContact();
@@ -41,16 +31,7 @@ namespace WebAddressbookTests
         public ContactHelper Modify(int index, ContactData newData)
         {
             manager.Navigator.OpenHomePage();
-            if (!IsContactCreated())
-            {
-                ContactData contact = new ContactData
-                {
-                    Firstame = "Ivan",
-                    Lastname = "Pupkin"
-                };
-                Create(contact);
-                manager.Navigator.OpenHomePage();
-            }
+
                 SelectEditContact(index);
                 FillContactForm(newData);
                 SubmitContactModification();
@@ -69,7 +50,21 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public bool IsContactCreated()
+        public void CreateContactIfNotExist()
+        {
+            manager.Navigator.OpenHomePage();
+            if (!IsContactExist())
+            {
+                ContactData contact = new ContactData
+                {
+                    Firstame = "Maria",
+                    Lastname = "Pupkina"
+                };
+                Create(contact);
+            }
+        }
+
+        public bool IsContactExist()
         {
             return IsElementPresent(By.XPath("(//img[@alt='Edit'])"));
         }

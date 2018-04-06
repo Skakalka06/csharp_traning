@@ -10,15 +10,17 @@ namespace WebAddressbookTests.test
     [TestFixture]
     public class ContactModificationTests : AuthTestBase
     {
-       
-            [Test]
-            public void ContactModificationTest()
-            {
+
+        [Test]
+        public void ContactModificationTest()
+        {
+            app.Contacts.CreateContactIfNotExist();
+
             ContactData newData = new ContactData();
             newData.Firstame = "Ivan";
             newData.Lastname = "Pupkin";
 
             app.Contacts.Modify(1, newData);
-            }
+        }
     }
 }
