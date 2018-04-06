@@ -20,52 +20,41 @@ namespace WebAddressbookTests
         public ContactHelper Remove(int v)
         {
             manager.Navigator.OpenHomePage();
-            if (IsElementPresent(By.XPath("(//input[@name='selected[]'])")))
+            if (!IsElementPresent(By.XPath("(//input[@name='selected[]'])")))
             {
-                SelectContact(v);
-                RemoveContact();
-                SubmitDeleted();
-            }
-
-            else
-
-            {
-                ContactData contact = new ContactData();
-                contact.Firstame = "Ivan";
-                contact.Lastname = "Pupkin";
+                ContactData contact = new ContactData
+                {
+                    Firstame = "Ivan",
+                    Lastname = "Pupkin"
+                };
                 Create(contact);
-
                 manager.Navigator.OpenHomePage();
+            }
+
                 SelectContact(v);
                 RemoveContact();
                 SubmitDeleted();
-            }
+
             return this;
         }
 
         public ContactHelper Modify(int index, ContactData newData)
         {
             manager.Navigator.OpenHomePage();
-            if (IsElementPresent(By.XPath("(//img[@alt='Edit'])")))
+            if (!IsElementPresent(By.XPath("(//img[@alt='Edit'])")))
             {
-                SelectEditContact(index);
-                FillContactForm(newData);
-                SubmitContactModification();
-                ReturnToHomePage();
-            }
-            else
-            {
-                ContactData contact = new ContactData();
-                contact.Firstame = "Ivan";
-                contact.Lastname = "Pupkin";
+                ContactData contact = new ContactData
+                {
+                    Firstame = "Ivan",
+                    Lastname = "Pupkin"
+                };
                 Create(contact);
-
                 manager.Navigator.OpenHomePage();
+            }
                 SelectEditContact(index);
                 FillContactForm(newData);
                 SubmitContactModification();
                 ReturnToHomePage();
-            }
 
             return this;
         }

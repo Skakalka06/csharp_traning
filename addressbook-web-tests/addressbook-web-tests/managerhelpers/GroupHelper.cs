@@ -21,26 +21,20 @@ namespace WebAddressbookTests
         public GroupHelper Remove(int v)
         {
             manager.Navigator.GoToGroupsPage();
-            if (IsElementPresent(By.XPath("(//input[@name='selected[]'])")))
+            if (!IsElementPresent(By.XPath("(//input[@name='selected[]'])")))
             {
-                SelectGroup(v);
-                RemoveGroup();
-                ReturnToGroupsPage();
-            }
-            else
-            {
-                GroupData group = new GroupData("111");
-                group.Header = "222";
-                group.Footer = "333";
+                GroupData group = new GroupData("111")
+                {
+                    Header = "222",
+                    Footer = "333"
+                };
 
                 Create(group);
+            }
 
                 SelectGroup(v);
                 RemoveGroup();
                 ReturnToGroupsPage();
-            }
-
-
 
             return this;
         }
@@ -48,31 +42,20 @@ namespace WebAddressbookTests
         public GroupHelper Modify(int v, GroupData newData)
         {
             manager.Navigator.GoToGroupsPage();
-            if (IsElementPresent(By.XPath("(//input[@name='selected[]'])")))
-            {
-                SelectGroup(v);
-                InitGroupModification();
-                FillGroupForm(newData);
-                SubmitGroupModification();
-                ReturnToGroupsPage();
-            }
-
-            else
+            if (!IsElementPresent(By.XPath("(//input[@name='selected[]'])")))
             {
                 GroupData group = new GroupData("111");
                 group.Header = "222";
                 group.Footer = "333";
 
                 Create(group);
+            }
 
                 SelectGroup(v);
                 InitGroupModification();
                 FillGroupForm(newData);
                 SubmitGroupModification();
                 ReturnToGroupsPage();
-
-            }
-
 
             return this;
         }
