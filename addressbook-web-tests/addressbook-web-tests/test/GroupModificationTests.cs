@@ -22,7 +22,7 @@ namespace WebAddressbookTests
                 Footer = null
             };
 
-            app.Groups.Modify(1, newData);
+            app.Groups.Modify(0, newData);
         }
 
     }

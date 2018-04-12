@@ -14,8 +14,11 @@ namespace WebAddressbookTests
         [Test]
         public void ContactRemovalTest()
         {
+
             app.Contacts.CreateContactIfNotExist();
-            app.Contacts.Remove(1);
+
+            app.Contacts.Remove(0);
+
         }
 
     }
