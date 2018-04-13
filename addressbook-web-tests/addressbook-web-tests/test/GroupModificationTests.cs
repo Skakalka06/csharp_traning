@@ -15,6 +15,7 @@ namespace WebAddressbookTests
         {
 
             app.Groups.CreateGroupIfNotExist();
+            List<GroupData> oldGroups = app.Groups.GetGroupList();
 
             GroupData newData = new GroupData("555")
             {
@@ -23,6 +24,11 @@ namespace WebAddressbookTests
             };
 
             app.Groups.Modify(0, newData);
+            List<GroupData> newGroups = app.Groups.GetGroupList();
+            oldGroups[0].Name = newData.Name;
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.AreEqual(oldGroups, newGroups);
         }
 
     }

@@ -16,11 +16,19 @@ namespace WebAddressbookTests.test
         {
             app.Contacts.CreateContactIfNotExist();
 
-            ContactData newData = new ContactData();
-            newData.Firstame = "Ivan";
-            newData.Lastname = "Pupkin";
+            ContactData newData = new ContactData( "Zaycev","Misha");
+
+            List<ContactData> oldContacts = app.Contacts.GetContactList();
 
             app.Contacts.Modify(0, newData);
+
+            List<ContactData> newContacts = app.Contacts.GetContactList();
+            oldContacts[0].Firstname = newData.Firstname;
+            oldContacts[0].Lastname = newData.Lastname;
+            oldContacts.Sort();
+            newContacts.Sort();
+
+            Assert.AreEqual(oldContacts, newContacts);
         }
     }
 }

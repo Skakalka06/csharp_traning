@@ -28,6 +28,19 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public List<ContactData> GetContactList()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+            manager.Navigator.OpenHomePage();
+            ICollection<IWebElement> elements = driver.FindElements(By.Name("entry"));
+
+            foreach (IWebElement element in elements)
+            {
+                IList<IWebElement> items = element.FindElements(By.CssSelector("td"));
+                contacts.Add(new ContactData(items[1].Text,items[2].Text));
+            }
+            return contacts;
+        }
         public ContactHelper Modify(int index, ContactData newData)
         {
             manager.Navigator.OpenHomePage();
@@ -55,11 +68,8 @@ namespace WebAddressbookTests
             manager.Navigator.OpenHomePage();
             if (!IsContactExist())
             {
-                ContactData contact = new ContactData
-                {
-                    Firstame = "Maria",
-                    Lastname = "Pupkina"
-                };
+                ContactData contact = new ContactData("Pupkina", "Maria");
+    
                 Create(contact);
             }
         }
@@ -71,7 +81,7 @@ namespace WebAddressbookTests
 
         public ContactHelper FillContactForm(ContactData contact)
         {
-            Type(By.Name("firstname"), contact.Firstame);
+            Type(By.Name("firstname"), contact.Firstname);
             Type(By.Name("lastname"), contact.Lastname);
             return this;
         }
