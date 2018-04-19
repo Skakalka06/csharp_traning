@@ -78,6 +78,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="test\GroupCreationTests.cs" />
     <Compile Include="test\LoginTests.cs" />
+    <Compile Include="test\SearchTests.cs" />
     <Compile Include="test\TestBase.cs" />
   </ItemGroup>
   <ItemGroup>

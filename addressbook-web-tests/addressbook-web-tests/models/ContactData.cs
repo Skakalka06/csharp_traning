@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace WebAddressbookTests
 {
@@ -10,6 +11,7 @@ namespace WebAddressbookTests
     {
         private string allPhones;
         private string allEmails;
+        private string fullInformation;
 
         public ContactData(string lastname, string firstname)
         {
@@ -118,13 +120,62 @@ namespace WebAddressbookTests
             }
         }
 
+        public string FullInformation
+        {
+            get
+            {
+                if (fullInformation != null)
+                {
+                    return fullInformation;
+                }
+                else
+                {
+                    string full = Lastname + " " + Firstname + Environment.NewLine;
+
+
+                    if (Address != null)
+                    {
+                        full = full + Address + Environment.NewLine;
+
+                    }
+
+                    if (!string.IsNullOrEmpty(HomePhone))
+                    {
+                        full = full + Environment.NewLine + ("H: " + HomePhone) + Environment.NewLine;
+                    }
+
+                    if (!string.IsNullOrEmpty(MobilePhone))
+                    {
+                        full = full + ("M: " + MobilePhone) + Environment.NewLine;
+
+                    }
+                    if (!string.IsNullOrEmpty(WorkPhone))
+                    {
+                        full = full + ("W: " + WorkPhone) + Environment.NewLine;
+
+                    }
+                    if (!string.IsNullOrEmpty(AllEmails))
+                    {
+                        full = full + Environment.NewLine + AllEmails;
+                    }
+
+                    return full;
+                }
+            }
+
+            set
+            {
+                fullInformation = value;
+            }
+        }
+
         public string CleanUp(string phone)
         {
             if (phone == null || phone =="")
             {
                 return "";
             }
-            return phone.Replace(" ","").Replace("-","").Replace("(","").Replace(")","") + "\r\n";
+            return Regex.Replace(phone, "[ -()]", "") + "\r\n";
         }
 
     }

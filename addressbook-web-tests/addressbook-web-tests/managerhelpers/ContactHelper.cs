@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
+using System.Text.RegularExpressions;
 
 namespace WebAddressbookTests
 {
@@ -34,6 +35,45 @@ namespace WebAddressbookTests
                 AllEmails = allEmails,
 
             };
+        }
+
+        public ContactData GetContactInformationFromDetailsPage(int index)
+        {
+
+            manager.Navigator.OpenHomePage();
+            SelectDetailsContact(0);
+            string[] firstandlastName = driver.FindElement(By.Id("content"))
+                .FindElement(By.TagName("b")).Text.Split(' ');
+            
+            string firstName = firstandlastName[0];
+            string lastName = firstandlastName[1];
+
+            string fullInformation = driver.FindElement(By.Id("content")).Text;
+
+
+
+            return new ContactData(firstName, lastName)
+            {
+                FullInformation = fullInformation
+
+            }; 
+
+        }
+
+        public void SelectDetailsContact(int index)
+        {
+            driver.FindElements(By.Name("entry"))[index]
+                .FindElements(By.TagName("td"))[6]
+                .FindElement(By.TagName("a")).Click();
+        }
+
+        public int GetNumberOfSearchResults()
+        {
+            manager.Navigator.OpenHomePage();
+            string text = driver.FindElement(By.TagName("label")).Text;
+            Match m = new Regex(@"\d+").Match(text);
+            return Int32.Parse(m.Value);
+
         }
 
         public ContactData GetContactInformationFromEditForm(int index)
@@ -68,9 +108,9 @@ namespace WebAddressbookTests
         {
             manager.Navigator.OpenHomePage();
 
-                SelectContact(v);
-                RemoveContact();
-                SubmitDeleted();
+            SelectContact(v);
+            RemoveContact();
+            SubmitDeleted();
             manager.Navigator.OpenHomePage();
 
             return this;
