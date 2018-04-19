@@ -130,6 +130,7 @@ namespace WebAddressbookTests
                 }
                 else
                 {
+                   
                     string full = Lastname + " " + Firstname + Environment.NewLine;
 
 
@@ -141,22 +142,61 @@ namespace WebAddressbookTests
 
                     if (!string.IsNullOrEmpty(HomePhone))
                     {
+
                         full = full + Environment.NewLine + ("H: " + HomePhone) + Environment.NewLine;
                     }
 
                     if (!string.IsNullOrEmpty(MobilePhone))
                     {
+                        if (string.IsNullOrEmpty(HomePhone))
+                        {
+                            full = full + Environment.NewLine;
+                        }
                         full = full + ("M: " + MobilePhone) + Environment.NewLine;
 
                     }
                     if (!string.IsNullOrEmpty(WorkPhone))
                     {
+                        if (string.IsNullOrEmpty(MobilePhone) && string.IsNullOrEmpty(HomePhone))
+                        {
+                            full = full + Environment.NewLine;
+                        }
                         full = full + ("W: " + WorkPhone) + Environment.NewLine;
 
                     }
-                    if (!string.IsNullOrEmpty(AllEmails))
+                    if (!string.IsNullOrEmpty(Email))
                     {
-                        full = full + Environment.NewLine + AllEmails;
+                        full = full + Environment.NewLine + Email;
+                        if (!string.IsNullOrEmpty(Email2)|| !string.IsNullOrEmpty(Email3))
+                        {
+                            full = full + Environment.NewLine;
+                        }
+                    }
+
+
+                    if (!string.IsNullOrEmpty(Email2))
+                    {
+                        if (string.IsNullOrEmpty(Email))
+                        {
+                            full = full + Environment.NewLine;
+                        }
+
+
+                        full = full + Email2; 
+
+                        if (!string.IsNullOrEmpty(Email3))
+                        {
+                            full = full + Environment.NewLine;
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(Email3))
+                    {
+                        if (string.IsNullOrEmpty(Email) && string.IsNullOrEmpty(Email2))
+                        {
+                            full = full + Environment.NewLine;
+                        }
+                        full = full +  Email3;
                     }
 
                     return full;
