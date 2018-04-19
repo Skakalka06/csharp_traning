@@ -70,6 +70,7 @@
     <Compile Include="models\GroupData.cs" />
     <Compile Include="test\AuthTestBase.cs" />
     <Compile Include="test\ContactCreationTests.cs" />
+    <Compile Include="test\ContactInformationTests.cs" />
     <Compile Include="test\ContactModificationTests.cs" />
     <Compile Include="test\ContactRemovalTests.cs" />
     <Compile Include="test\GroupModificationTests.cs" />
