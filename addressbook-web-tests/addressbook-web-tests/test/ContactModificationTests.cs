@@ -12,7 +12,7 @@ namespace WebAddressbookTests.test
     {
 
         [Test]
-        public void ContactModificationTest()
+        public void ContactModificationTest(ContactData contact)
         {
             app.Contacts.CreateContactIfNotExist();
 
