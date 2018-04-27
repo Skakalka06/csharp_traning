@@ -63,7 +63,7 @@ namespace WebAddressbookTests
         }
 
 
-        [Test, TestCaseSource("ContactDataFromJsonFile")]
+        [Test, TestCaseSource("ContactDataFromXmlFile")]
         public void ContactCreationTest(ContactData contact)
         {
             
