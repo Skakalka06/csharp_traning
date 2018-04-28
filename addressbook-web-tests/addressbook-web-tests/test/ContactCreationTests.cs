@@ -31,7 +31,7 @@ namespace WebAddressbookTests
             }
             return contacts;
         }
-        public static IEnumerable<ContactData> GroupDataFromCsvFile()
+        public static IEnumerable<ContactData> ContactDataFromCsvFile()
         {
             List<ContactData> contacts = new List<ContactData>();
             string[] lines = File.ReadAllLines(@"contacts.csv");
@@ -49,6 +49,28 @@ namespace WebAddressbookTests
             return contacts;
         }
 
+        public static IEnumerable<ContactData> ContactDataFromExcelFile()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+            Excel.Application app = new Excel.Application();
+            Excel.Workbook wb = app.Workbooks.Open(Path.Combine(Directory.GetCurrentDirectory(), @"contacts.xlsx"));
+            Excel.Worksheet sheet = wb.ActiveSheet;
+            Excel.Range range = sheet.UsedRange;
+            for (int i = 1; i <= range.Rows.Count; i++)
+            {
+                contacts.Add(new ContactData()
+                {
+                    Lastname = range.Cells[i, 1].Value,
+                    Firstname = range.Cells[i, 2].Value
+
+                });
+            }
+            wb.Close();
+            app.Visible = false;
+            app.Quit();
+            return contacts;
+        }
+
         public static IEnumerable<ContactData> ContactDataFromXmlFile()
         {
             return (List<ContactData>)
@@ -63,7 +85,7 @@ namespace WebAddressbookTests
         }
 
 
-        [Test, TestCaseSource("ContactDataFromXmlFile")]
+        [Test, TestCaseSource("ContactDataFromExcelFile")]
         public void ContactCreationTest(ContactData contact)
         {
             

@@ -165,14 +165,14 @@ namespace WebAddressbookTests
 
                     if (Address != null)
                     {
-                        full = full + Address + Environment.NewLine;
+                        full = full + Address;
 
                     }
 
                     if (!string.IsNullOrEmpty(HomePhone))
                     {
 
-                        full = full + Environment.NewLine + ("H: " + HomePhone) + Environment.NewLine;
+                        full = Environment.NewLine + full + Environment.NewLine + ("H: " + HomePhone) + Environment.NewLine;
                     }
 
                     if (!string.IsNullOrEmpty(MobilePhone))

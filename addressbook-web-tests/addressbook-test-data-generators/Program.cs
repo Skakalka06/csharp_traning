@@ -72,30 +72,60 @@ namespace addressbook_test_data_generators
                         Lastname = TestBase.GenerateRandomString(10)
                     });
                 }
-                StreamWriter writer = new StreamWriter(filename);
-                if (format == "csv")
+                if (format == "excel")
                 {
-                    WriteContactsToCsvFile(contacts, writer);
+                    WriteContactsToExcelFile(contacts, filename);
                 }
-                else if (format == "xml")
-                {
-                    WriteContactsToXmlFile(contacts, writer);
-                }
-                else if (format == "json")
-                {
-                    WriteContactsToJsonFile(contacts, writer);
-                }
-
                 else
                 {
-                    System.Console.Out.Write("Unrecognized format" + " " + format);
+                    StreamWriter writer = new StreamWriter(filename);
+                    if (format == "csv")
+                    {
+                        WriteContactsToCsvFile(contacts, writer);
+                    }
+                    else if (format == "xml")
+                    {
+                        WriteContactsToXmlFile(contacts, writer);
+                    }
+                    else if (format == "json")
+                    {
+                        WriteContactsToJsonFile(contacts, writer);
+                    }
+
+                    else
+                    {
+                        System.Console.Out.Write("Unrecognized format" + " " + format);
+                    }
+                    writer.Close();
                 }
-                writer.Close();
             }
             else
             {
                 System.Console.Out.Write("Unrecognized type" + " " + type);
             }
+        }
+
+        public static void WriteContactsToExcelFile(List<ContactData> contacts, string filename)
+        {
+            Excel.Application app = new Excel.Application();
+            app.Visible = true;
+            Excel.Workbook wb = app.Workbooks.Add();
+            Excel.Worksheet sheet = wb.ActiveSheet;
+
+            int row = 1;
+            foreach (ContactData contact in contacts)
+            {
+                sheet.Cells[row, 1] = contact.Firstname;
+                sheet.Cells[row, 2] = contact.Lastname;
+                row++;
+            }
+
+            string fullPath = Path.Combine(Directory.GetCurrentDirectory(), filename);
+            File.Delete(fullPath);
+            wb.SaveAs(fullPath);
+            wb.Close();
+            app.Visible = false;
+            app.Quit();
         }
 
         public static void WriteContactsToJsonFile(List<ContactData> contacts, StreamWriter writer)
