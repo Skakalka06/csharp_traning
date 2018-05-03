@@ -5,6 +5,7 @@ using System.Threading;
 using System.IO;
 using System.Collections.Generic;
 using NUnit.Framework;
+using System.Linq;
 using System.Xml;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
@@ -16,7 +17,7 @@ using Excel = Microsoft.Office.Interop.Excel;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class GroupCreationTests : AuthTestBase
+    public class GroupCreationTests : GroupTestBase
     {
         public static IEnumerable<GroupData> RandomGroupDataProvider()
         {
@@ -40,7 +41,7 @@ namespace WebAddressbookTests
 
             foreach (string l in lines)
             {
-               string[] parts = l.Split(',');
+                string[] parts = l.Split(',');
                 groups.Add(new GroupData(parts[0])
                 {
                     Header = parts[1],
@@ -53,7 +54,7 @@ namespace WebAddressbookTests
 
         public static IEnumerable<GroupData> GroupDataFromXmlFile()
         {
-            return (List<GroupData>) 
+            return (List<GroupData>)
                 new XmlSerializer(typeof(List<GroupData>)).
                 Deserialize(new StreamReader(@"groups.xml"));
         }
@@ -71,7 +72,7 @@ namespace WebAddressbookTests
             Excel.Workbook wb = app.Workbooks.Open(Path.Combine(Directory.GetCurrentDirectory(), @"groups.xlsx"));
             Excel.Worksheet sheet = wb.ActiveSheet;
             Excel.Range range = sheet.UsedRange;
-            for(int i = 1; i <= range.Rows.Count; i++)
+            for (int i = 1; i <= range.Rows.Count; i++)
             {
                 groups.Add(new GroupData()
                 {
@@ -90,18 +91,18 @@ namespace WebAddressbookTests
         public void GroupCreationTest(GroupData group)
         {
 
-            List<GroupData> oldGroups = app.Groups.GetGroupList();
+            List<GroupData> oldGroups = GroupData.GetAll();
             app.Groups.Create(group);
 
             Assert.AreEqual(oldGroups.Count + 1, app.Groups.GetGroupCount());
 
-            List<GroupData> newGroups = app.Groups.GetGroupList();
+            List<GroupData> newGroups = GroupData.GetAll();
             oldGroups.Add(group);
             oldGroups.Sort();
             newGroups.Sort();
 
             Assert.AreEqual(oldGroups, newGroups);
-            
+
         }
 
 
@@ -121,6 +122,17 @@ namespace WebAddressbookTests
             newGroups.Sort();
 
             Assert.AreEqual(oldGroups, newGroups);
+        }
+
+        [Test]
+        public void TestDBConnectivity()
+        {
+            foreach (ContactData contact in ContactData.GetAll() )
+            {
+                System.Console.Out.WriteLine(contact.Deprecated);
+            }
+
+
         }
     }
 }

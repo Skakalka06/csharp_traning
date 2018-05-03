@@ -37,6 +37,8 @@ namespace WebAddressbookTests
             };
         }
 
+
+
         public ContactData GetContactInformationFromDetailsPage(int index)
         {
 
@@ -116,6 +118,48 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public ContactHelper Remove(ContactData contact)
+        {
+            manager.Navigator.OpenHomePage();
+
+            SelectContact(contact.Id);
+            RemoveContact();
+            SubmitDeleted();
+            manager.Navigator.OpenHomePage();
+
+            return this;
+        }
+
+        public ContactHelper AddContactToGroup(ContactData contact, GroupData group)
+        {
+            manager.Navigator.OpenHomePage();
+            ClearGroupFilter();
+            SelectContact(contact.Id);
+            SelectGroupToAdd(group.Name);
+            CommitEdingContactToGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count() > 0);
+
+
+            return this;
+
+        }
+
+        public void CommitEdingContactToGroup()
+        {
+            driver.FindElement(By.Name("add")).Click();
+        }
+
+        public void SelectGroupToAdd(string name)
+        {
+            new SelectElement(driver.FindElement(By.Name("to_group"))).SelectByText(name);
+        }
+
+        public void ClearGroupFilter()
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");
+        }
+
         public int GetContactCount()
         {
             return driver.FindElements(By.Name("entry")).Count; 
@@ -147,6 +191,18 @@ namespace WebAddressbookTests
                 FillContactForm(newData);
                 SubmitContactModification();
                 ReturnToHomePage();
+
+            return this;
+        }
+
+        public ContactHelper Modify(ContactData oldContact, ContactData newContact)
+        {
+            manager.Navigator.OpenHomePage();
+
+            SelectEditContact(oldContact.Id);
+            FillContactForm(newContact);
+            SubmitContactModification();
+            ReturnToHomePage();
 
             return this;
         }
@@ -208,6 +264,14 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public ContactHelper SelectContact(String id)
+        {
+            //driver.FindElement(By.XPath("(//input[@name='selected[]' and @value='" + id + "'])")).Click();
+            driver.FindElement(By.Id(id)).Click();
+            return this;
+        }
+
+
         public ContactHelper SubmitDeleted()
         {
             driver.SwitchTo().Alert().Accept();
@@ -231,6 +295,16 @@ namespace WebAddressbookTests
                 .FindElement(By.TagName("a")).Click();
             return this;
         }
+
+        public ContactHelper SelectEditContact(String id)
+        {
+            driver.FindElement(By.XPath("(//input[@name='selected[]' and @value='" + id + "'])"))
+                .FindElement(By.XPath("(//img[@alt='Edit'])")).Click();
+            return this;
+        }
+
+
+
 
         public ContactHelper ReturnToHomePage()
         {
