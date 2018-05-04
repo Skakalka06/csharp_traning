@@ -15,16 +15,28 @@ namespace WebAddressbookTests
             List<ContactData> oldList = null;
             ContactData contact = null;
             GroupData group = null;
-            for (int i = 0; i < GroupData.GetAll().Count; i++)
+            
+            //for (int i = 0; i < GroupData.GetAll().Count; i++)
+            //{
+            //    group = GroupData.GetAll()[i];
+            //    oldList = group.GetContacts();
+            //    contact = ContactData.GetAll().Intersect(oldList).FirstOrDefault();
+            //    if (contact != null)
+            //    { break; }
+            //}
+
+            foreach (GroupData g in GroupData.GetAll())
             {
-                 group = GroupData.GetAll()[i];
+                group = g;
                 oldList = group.GetContacts();
-                 contact = ContactData.GetAll().Intersect(oldList).FirstOrDefault();
-                if (contact != null)
-                { break; }
+                contact = group.GetContacts().FirstOrDefault();
+                if (contact != null) break;
             }
-
-
+            if (contact == null)
+            {
+                System.Console.Out.Write("В группах нет контактов");
+                return;
+            }
             app.Contacts.DeleteContactToGroup(contact, group);
 
 
