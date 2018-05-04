@@ -7,26 +7,24 @@ using NUnit.Framework;
 
 namespace WebAddressbookTests
 {
-    public class AddingContactToGroupTests : AuthTestBase
+    public class DeleteContactFromGroupTests :AuthTestBase
     {
         [Test]
-        public void AddingContactToGroupTest()
+        public void DeleteContactFromGroupTest()
         {
             GroupData group = GroupData.GetAll()[0];
             List<ContactData> oldList = group.GetContacts();
-            ContactData contact = ContactData.GetAll().Except(oldList).First();
+            ContactData contact = ContactData.GetAll().Intersect(oldList).First();
 
 
-            app.Contacts.AddContactToGroup(contact, group);
+            app.Contacts.DeleteContactToGroup(contact, group);
 
 
             List<ContactData> newList = group.GetContacts();
-            oldList.Add(contact);
+            oldList.Remove(contact);
             oldList.Sort();
             newList.Sort();
             Assert.AreEqual(oldList, newList);
-
         }
-
     }
 }

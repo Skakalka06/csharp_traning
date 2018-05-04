@@ -145,6 +145,21 @@ namespace WebAddressbookTests
 
         }
 
+        public ContactHelper DeleteContactToGroup(ContactData contact, GroupData group)
+        {
+            manager.Navigator.OpenHomePage();
+            ClearGroupFilter(group.Name);
+            SelectContact(contact.Id);
+            DeleteContactFromGroup();
+
+            return this;
+        }
+
+        public void DeleteContactFromGroup()
+        {
+            driver.FindElement(By.Name("remove")).Click();
+        }
+
         public void CommitEdingContactToGroup()
         {
             driver.FindElement(By.Name("add")).Click();
@@ -158,6 +173,11 @@ namespace WebAddressbookTests
         public void ClearGroupFilter()
         {
             new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");
+        }
+
+        public void ClearGroupFilter(string name)
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText(name);
         }
 
         public int GetContactCount()
