@@ -12,9 +12,17 @@ namespace WebAddressbookTests
         [Test]
         public void DeleteContactFromGroupTest()
         {
-            GroupData group = GroupData.GetAll()[0];
-            List<ContactData> oldList = group.GetContacts();
-            ContactData contact = ContactData.GetAll().Intersect(oldList).First();
+            List<ContactData> oldList = null;
+            ContactData contact = null;
+            GroupData group = null;
+            for (int i = 0; i < GroupData.GetAll().Count; i++)
+            {
+                 group = GroupData.GetAll()[i];
+                oldList = group.GetContacts();
+                 contact = ContactData.GetAll().Intersect(oldList).FirstOrDefault();
+                if (contact != null)
+                { break; }
+            }
 
 
             app.Contacts.DeleteContactToGroup(contact, group);
