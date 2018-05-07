@@ -18,6 +18,20 @@ namespace WebAddressbookTests
         {
         }
 
+        public bool CheckingExistContactInGroups(out ContactData contact, out GroupData group)
+        {
+            foreach (GroupData g in GroupData.GetAll())
+            {
+                group = g;
+                List<ContactData> oldList = group.GetContacts();
+                contact = ContactData.GetAll().Except(oldList).FirstOrDefault();
+                if (contact != null) return true;
+            }
+            contact = null;
+            group = null;
+            return false;
+        }
+
         public ContactData GetContactInformationFromTable(int index)
         {
             manager.Navigator.OpenHomePage();
@@ -319,7 +333,12 @@ namespace WebAddressbookTests
         public ContactHelper SelectEditContact(String id)
         {
             driver.FindElement(By.XPath("(//input[@name='selected[]' and @value='" + id + "'])"))
-                .FindElement(By.XPath("(//img[@alt='Edit'])")).Click();
+               .FindElement(By.XPath("(//img[@alt='Edit'])")).Click();
+
+            //driver.FindElements(By.Name("entry"))
+            //    .Where(e=>
+            //e.FindElements(By.TagName("td")).First().FindElement(By.Id(id))
+            //    .FindElement(By.TagName("a")).Click();
             return this;
         }
 

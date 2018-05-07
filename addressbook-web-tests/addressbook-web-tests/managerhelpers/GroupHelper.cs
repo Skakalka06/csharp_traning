@@ -28,6 +28,10 @@ namespace WebAddressbookTests
             return this;
         }
 
+
+
+        
+
         public GroupHelper Remove(GroupData group)
         {
             manager.Navigator.GoToGroupsPage();
@@ -141,6 +145,19 @@ namespace WebAddressbookTests
         public bool IsGroupExist()
         {
             return IsElementPresent(By.XPath("(//input[@name='selected[]'])"));
+        }
+
+        public bool CheckingExistAnyContactsInGroups(out ContactData contact, out GroupData group)
+        {
+            foreach (GroupData g in GroupData.GetAll())
+            {
+                group = g;
+                contact = group.GetContacts().FirstOrDefault();
+                if (contact != null) return true;
+            }
+            contact = null;
+            group = null;
+            return false;
         }
 
         public GroupHelper InitNewGroupCreation()

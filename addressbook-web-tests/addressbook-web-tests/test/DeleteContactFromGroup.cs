@@ -12,31 +12,21 @@ namespace WebAddressbookTests
         [Test]
         public void DeleteContactFromGroupTest()
         {
+            app.Groups.CreateGroupIfNotExist();
+            app.Contacts.CreateContactIfNotExist();
             List<ContactData> oldList = null;
             ContactData contact = null;
             GroupData group = null;
-            
-            //for (int i = 0; i < GroupData.GetAll().Count; i++)
-            //{
-            //    group = GroupData.GetAll()[i];
-            //    oldList = group.GetContacts();
-            //    contact = ContactData.GetAll().Intersect(oldList).FirstOrDefault();
-            //    if (contact != null)
-            //    { break; }
-            //}
 
-            foreach (GroupData g in GroupData.GetAll())
+            while (!app.Groups.CheckingExistAnyContactsInGroups(out contact, out group))
             {
-                group = g;
+                group = GroupData.GetAll()[0];
+                contact = ContactData.GetAll().First();
+
+                app.Contacts.AddContactToGroup(contact, group);
+            }
                 oldList = group.GetContacts();
-                contact = group.GetContacts().FirstOrDefault();
-                if (contact != null) break;
-            }
-            if (contact == null)
-            {
-                System.Console.Out.Write("В группах нет контактов");
-                return;
-            }
+            
             app.Contacts.DeleteContactToGroup(contact, group);
 
 
@@ -46,5 +36,6 @@ namespace WebAddressbookTests
             newList.Sort();
             Assert.AreEqual(oldList, newList);
         }
+
     }
 }
