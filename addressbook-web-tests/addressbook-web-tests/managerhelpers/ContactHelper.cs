@@ -300,7 +300,6 @@ namespace WebAddressbookTests
 
         public ContactHelper SelectContact(String id)
         {
-            //driver.FindElement(By.XPath("(//input[@name='selected[]' and @value='" + id + "'])")).Click();
             driver.FindElement(By.Id(id)).Click();
             return this;
         }
@@ -332,13 +331,8 @@ namespace WebAddressbookTests
 
         public ContactHelper SelectEditContact(String id)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]' and @value='" + id + "'])"))
-               .FindElement(By.XPath("(//img[@alt='Edit'])")).Click();
+            driver.FindElement(By.XPath("//a[@href='edit.php?id="+ id +"']")).Click();
 
-            //driver.FindElements(By.Name("entry"))
-            //    .Where(e=>
-            //e.FindElements(By.TagName("td")).First().FindElement(By.Id(id))
-            //    .FindElement(By.TagName("a")).Click();
             return this;
         }
 

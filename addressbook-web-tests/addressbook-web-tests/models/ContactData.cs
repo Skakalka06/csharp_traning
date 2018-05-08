@@ -177,45 +177,45 @@ namespace WebAddressbookTests
                 else
                 {
                    
-                    string full = Lastname + " " + Firstname + Environment.NewLine;
+                     fullInformation = Lastname + " " + Firstname;
 
 
-                    if (Address != null)
+                    if (!string.IsNullOrEmpty(Address))
                     {
-                        full = full + Address;
+                        fullInformation = fullInformation + Environment.NewLine + Address;
 
                     }
 
                     if (!string.IsNullOrEmpty(HomePhone))
                     {
 
-                        full = Environment.NewLine + full + Environment.NewLine + ("H: " + HomePhone) + Environment.NewLine;
+                        fullInformation = Environment.NewLine + fullInformation + Environment.NewLine + ("H: " + HomePhone) + Environment.NewLine;
                     }
 
                     if (!string.IsNullOrEmpty(MobilePhone))
                     {
                         if (string.IsNullOrEmpty(HomePhone))
                         {
-                            full = full + Environment.NewLine;
+                            fullInformation = fullInformation + Environment.NewLine;
                         }
-                        full = full + ("M: " + MobilePhone) + Environment.NewLine;
+                        fullInformation = fullInformation + ("M: " + MobilePhone) + Environment.NewLine;
 
                     }
                     if (!string.IsNullOrEmpty(WorkPhone))
                     {
                         if (string.IsNullOrEmpty(MobilePhone) && string.IsNullOrEmpty(HomePhone))
                         {
-                            full = full + Environment.NewLine;
+                            fullInformation = fullInformation + Environment.NewLine;
                         }
-                        full = full + ("W: " + WorkPhone) + Environment.NewLine;
+                        fullInformation = fullInformation + ("W: " + WorkPhone) + Environment.NewLine;
 
                     }
                     if (!string.IsNullOrEmpty(Email))
                     {
-                        full = full + Environment.NewLine + Email;
+                        fullInformation = fullInformation + Environment.NewLine + Email;
                         if (!string.IsNullOrEmpty(Email2)|| !string.IsNullOrEmpty(Email3))
                         {
-                            full = full + Environment.NewLine;
+                            fullInformation = fullInformation + Environment.NewLine;
                         }
                     }
 
@@ -224,15 +224,15 @@ namespace WebAddressbookTests
                     {
                         if (string.IsNullOrEmpty(Email))
                         {
-                            full = full + Environment.NewLine;
+                            fullInformation = fullInformation + Environment.NewLine;
                         }
 
 
-                        full = full + Email2; 
+                        fullInformation = fullInformation + Email2; 
 
                         if (!string.IsNullOrEmpty(Email3))
                         {
-                            full = full + Environment.NewLine;
+                            fullInformation = fullInformation + Environment.NewLine;
                         }
                     }
 
@@ -240,12 +240,12 @@ namespace WebAddressbookTests
                     {
                         if (string.IsNullOrEmpty(Email) && string.IsNullOrEmpty(Email2))
                         {
-                            full = full + Environment.NewLine;
+                            fullInformation = fullInformation + Environment.NewLine;
                         }
-                        full = full +  Email3;
+                        fullInformation = fullInformation +  Email3;
                     }
 
-                    return full;
+                    return fullInformation;
                 }
             }
 
